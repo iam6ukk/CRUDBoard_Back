@@ -12,5 +12,6 @@ public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
+    // 예외 발생할 경우 메시지 리턴을 위해
 
 }

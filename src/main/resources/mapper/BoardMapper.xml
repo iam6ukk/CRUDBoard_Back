@@ -4,18 +4,67 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mappper.BoardMapper">
 
-    <select id="getBoardList" resultType="com.example.demo.domain.Board">
-
+    <!-- 게시글 목록 -->
+    <select id="selectBoardList" resultType="com.example.demo.dto.BoardDto">
         SELECT seq,
                title,
                content,
                reg_dt
         FROM tb_board;
-
     </select>
 
-    <insert id="insertBoard">
-        insert into tb_board (seq, title, content, reg_dt) values (?,?,?,?);
+    <!-- 게시글 총 개수 -->
+    <select id="countBoard" parameterType="com.example.demo.dto.BoardDto" resultType="int">
+        SELECT  count(*)
+        FROM    tb_board;
+    </select>
+
+    <!-- 게시글 페이징 -->
+    <select id ="getListWithPaging" parameterType="com.example.demo.dto.Criteria" resultType="com.example.demo.dto.BoardDto">
+        <![CDATA[
+        SELECT seq,
+               title,
+               content,
+               reg_dt
+        FROM (
+                 select /*+INDEX_DESC(tbl_board pk_board) */
+                     rownum rn, seq, title, content, reg_dt
+                 from tb_board
+                 where rownum <= #{pageNum}*#{amount}
+             )
+        where rn > (#{pageNum} -1) * #{amount}
+        ]]>
+    </select>
+
+    <select id="selectBoard" resultType="com.example.demo.dto.BoardDto">
+        select *
+        from tb_board
+    </select>
+
+    <!-- 개시글 작성 -->
+    <insert id="insertBoard" parameterType="com.example.demo.dto.BoardDto">
+        INSERT INTO tb_board(title, content) values (#{title}, #{content});
     </insert>
+
+    <!-- 게시글 상세 -->
+    <select id="selectBoardDetail" resultType="com.example.demo.dto.BoardDto">
+        SELECT seq,
+               title,
+               content,
+               reg_dt
+        FROM tb_board
+        WHERE seq = #{seq};
+    </select>
+
+    <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="com.example.demo.dto.BoardDto">
+        UPDATE tb_board SET title=#{title}, content=#{content} WHERE seq= #{seq};
+    </update>
+
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM tb_board WHERE seq = #{seq};
+    </delete>
 
 </mapper>
