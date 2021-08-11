@@ -24,6 +24,7 @@ public class BoardServiceImpl implements BoardService {
             PageHelper.startPage(page, pageSize);
             PageHelper.orderBy("seq ASC");
             result = boardMapper.selectBoard();
+            // mapper의 함수 호출해 result에 저장
         } catch(Exception e){
             e.printStackTrace();
         }

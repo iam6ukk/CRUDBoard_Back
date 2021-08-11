@@ -12,10 +12,10 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-    // 게시글 조회
+    // 게시글 조회(1)
     List<BoardDto> selectBoardList();
 
-
+    // 게시글 조회(2)
     List<BoardDto> selectBoard();
 
 

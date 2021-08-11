@@ -29,6 +29,7 @@ public class BoardController {
 //        // boardMapper의 selectBoardList 함수 호출, 결과 반환
 //    }
 
+    // 게시글 목록 + 페이지
     @GetMapping("/board")
     public PageInfo<BoardDto> listBoard(
             @RequestParam(value = "p_num", required = false, defaultValue = "1") int page) {

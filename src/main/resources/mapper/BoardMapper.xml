@@ -13,6 +13,12 @@
         FROM tb_board;
     </select>
 
+    <!-- 페이지 게시글 -->
+    <select id="selectBoard" resultType="com.example.demo.dto.BoardDto">
+        select *
+        from tb_board
+    </select>
+
     <!-- 게시글 총 개수 -->
     <select id="countBoard" parameterType="com.example.demo.dto.BoardDto" resultType="int">
         SELECT  count(*)
@@ -34,11 +40,6 @@
              )
         where rn > (#{pageNum} -1) * #{amount}
         ]]>
-    </select>
-
-    <select id="selectBoard" resultType="com.example.demo.dto.BoardDto">
-        select *
-        from tb_board
     </select>
 
     <!-- 개시글 작성 -->
